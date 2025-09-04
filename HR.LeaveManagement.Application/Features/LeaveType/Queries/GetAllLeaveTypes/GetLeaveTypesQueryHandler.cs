@@ -4,7 +4,7 @@ using MediatR;
 
 namespace HR.LeaveManagement.Application.Features.LeaveType.Queries.GetAllLeaveTypes;
 
-public class GetLeaveTypesHandler(IMapper mapper, ILeaveTypeRepository leaveTypeRepository)
+public class GetLeaveTypesQueryHandler(IMapper mapper, ILeaveTypeRepository leaveTypeRepository)
     : IRequestHandler<GetLeaveTypesQuery, List<LeaveTypeDto>>
 {
     public async Task<List<LeaveTypeDto>> Handle(GetLeaveTypesQuery request, CancellationToken cancellationToken)
