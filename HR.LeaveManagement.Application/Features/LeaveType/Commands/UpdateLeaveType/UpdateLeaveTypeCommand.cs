@@ -1,5 +1,11 @@
+using HR.LeaveManagement.Application.Features.LeaveType.Commands.Common;
 using MediatR;
 
 namespace HR.LeaveManagement.Application.Features.LeaveType.Commands.UpdateLeaveType;
 
-public record UpdateLeaveTypeCommand(int Id) : IRequest<Unit>;
+public class UpdateLeaveTypeCommand : IRequest<Unit>, ILeaveTypeCommand
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public int DefaultDays { get; set; }
+}

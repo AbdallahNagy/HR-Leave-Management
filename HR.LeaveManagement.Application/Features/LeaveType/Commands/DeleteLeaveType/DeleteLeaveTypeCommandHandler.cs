@@ -10,12 +10,9 @@ public class DeleteLeaveTypeCommandHandler(ILeaveTypeRepository leaveTypeReposit
     public async Task<Unit> Handle(DeleteLeaveTypeCommand request, CancellationToken cancellationToken)
     {
         var leaveType = await leaveTypeRepository.GetByIdAsync(request.Id);
-        
-        if (leaveType == null)
-        {
-            throw new NotFoundException(nameof(LeaveType), request.Id);
-        }
-        
+
+        if (leaveType == null) throw new NotFoundException(nameof(LeaveType), request.Id);
+
         await leaveTypeRepository.DeleteAsync(leaveType);
         return Unit.Value;
     }

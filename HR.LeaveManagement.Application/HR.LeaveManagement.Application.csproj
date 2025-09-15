@@ -12,7 +12,22 @@
 
     <ItemGroup>
       <PackageReference Include="AutoMapper" Version="15.0.1" />
+      <PackageReference Include="FluentValidation" Version="12.0.0" />
+      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0" />
       <PackageReference Include="MediatR" Version="13.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Features\LeaveAllocation\Commands\CreateLeaveAllocation\" />
+      <Folder Include="Features\LeaveAllocation\Commands\DeleteLeaveAllocation\" />
+      <Folder Include="Features\LeaveAllocation\Commands\UpdateLeaveAllocation\" />
+      <Folder Include="Features\LeaveAllocation\Queries\GetAllLeaveAllocations\" />
+      <Folder Include="Features\LeaveAllocation\Queries\GetLeaveAllocationDetails\" />
+      <Folder Include="Features\LeaveRequest\Commands\CreateLeaveRequest\" />
+      <Folder Include="Features\LeaveRequest\Commands\DeleteLeaveRequest\" />
+      <Folder Include="Features\LeaveRequest\Commands\UpdateLeaveRequest\" />
+      <Folder Include="Features\LeaveRequest\Queries\GetAllLeaveRequests\" />
+      <Folder Include="Features\LeaveRequest\Queries\GetLeaveRequestDetails\" />
     </ItemGroup>
 
 </Project>
