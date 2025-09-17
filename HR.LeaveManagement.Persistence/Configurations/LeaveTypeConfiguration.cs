@@ -14,16 +14,16 @@ public class LeaveTypeConfiguration : IEntityTypeConfiguration<LeaveType>
                 Id = 1,
                 Name = "Vacation",
                 DefaultDays = 10,
-                DateCreated = DateTime.Now,
-                DateModified = DateTime.Now
+                DateCreated = new DateTime(2023, 3, 5),
+                DateModified = new DateTime(2023, 12, 31)
             },
             new LeaveType
             {
                 Id = 2,
                 Name = "Sick",
                 DefaultDays = 12,
-                DateCreated = DateTime.Now,
-                DateModified = DateTime.Now
+                DateCreated = new DateTime(2025, 09, 05),
+                DateModified = new DateTime(2025, 12, 31)
             }
         );
 
