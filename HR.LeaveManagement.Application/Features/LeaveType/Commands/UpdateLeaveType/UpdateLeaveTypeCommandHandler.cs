@@ -20,7 +20,7 @@ public class UpdateLeaveTypeCommandHandler(IMapper mapper, ILeaveTypeRepository 
 
         if (leaveType == null) throw new NotFoundException(nameof(LeaveType), request.Id);
 
-        var leaveTypeToUpdate = mapper.Map<Domain.LeaveType>(leaveType);
+        var leaveTypeToUpdate = mapper.Map<Domain.LeaveType>(request);
 
         await leaveTypeRepository.UpdateAsync(leaveTypeToUpdate);
         return Unit.Value;

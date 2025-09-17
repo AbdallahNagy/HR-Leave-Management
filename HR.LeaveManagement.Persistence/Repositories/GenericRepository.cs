@@ -20,10 +20,12 @@ public class GenericRepository<T>(HrDatabaseContext context) : IGenericRepositor
         return await Context.Set<T>().AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
     }
 
-    public async Task CreateAsync(T entity)
+    public async Task<int> CreateAsync(T entity)
     {
         await Context.Set<T>().AddAsync(entity);
         await Context.SaveChangesAsync();
+        
+        return entity.Id;
     }
 
     public async Task UpdateAsync(T entity)

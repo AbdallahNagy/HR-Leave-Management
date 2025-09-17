@@ -1,6 +1,9 @@
+using HR.LeaveManagement.Application.Features.LeaveType.Commands.CreateLeaveType;
+using HR.LeaveManagement.Application.Features.LeaveType.Commands.DeleteLeaveType;
+using HR.LeaveManagement.Application.Features.LeaveType.Commands.UpdateLeaveType;
 using HR.LeaveManagement.Application.Features.LeaveType.Queries.GetAllLeaveTypes;
+using HR.LeaveManagement.Application.Features.LeaveType.Queries.GetLeaveTypeDetails;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HR.LeaveManagement.Api.Controllers
@@ -9,7 +12,6 @@ namespace HR.LeaveManagement.Api.Controllers
     [ApiController]
     public class LeaveTypesController(IMediator mediator) : ControllerBase
     {
-        // GET: api/<LeaveTypesController>
         [HttpGet]
         public async Task<List<LeaveTypeDto>> Get()
         {
@@ -17,29 +19,35 @@ namespace HR.LeaveManagement.Api.Controllers
             return leaveTypes;
         }
 
-        // GET api/<LeaveTypesController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult<LeaveTypeDetailsDto>> Get(int id)
         {
-            return "value";
+            var leaveType = await mediator.Send(new GetLeaveTypeDetailsQuery(id));
+            return Ok(leaveType);
         }
 
-        // POST api/<LeaveTypesController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> Post([FromBody] CreateLeaveTypeCommand createLeaveTypeCommand)
         {
+            var response = await mediator.Send(createLeaveTypeCommand);
+            return CreatedAtAction(nameof(Get), new { id = response });
         }
 
-        // PUT api/<LeaveTypesController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> Put([FromBody] UpdateLeaveTypeCommand updateLeaveTypeCommand)
         {
+            await mediator.Send(updateLeaveTypeCommand);
+            return NoContent();
         }
 
-        // DELETE api/<LeaveTypesController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
+            await mediator.Send(new DeleteLeaveTypeCommand(id));
         }
     }
 }

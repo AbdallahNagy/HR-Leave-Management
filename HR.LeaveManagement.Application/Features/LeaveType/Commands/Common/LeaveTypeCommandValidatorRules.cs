@@ -24,6 +24,7 @@ public class LeaveTypeCommandValidatorRules<T>(AbstractValidator<T> validator, I
     
     private Task<bool> LeaveTypeUnique(T command, CancellationToken token)
     {
-        return leaveTypeRepository.IsLeaveTypeUnique(command.Name);
+        var isUnique = leaveTypeRepository.IsLeaveTypeUnique(command.Name);
+        return isUnique;
     }
 }

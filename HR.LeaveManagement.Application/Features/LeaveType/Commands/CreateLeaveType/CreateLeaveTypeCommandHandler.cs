@@ -10,9 +10,9 @@ public class CreateLeaveTypeCommandHandler(
     IMapper mapper,
     ILeaveTypeRepository leaveTypeRepository,
     IAppLogger<CreateLeaveTypeCommandHandler> logger)
-    : IRequestHandler<CreateLeaveTypeCommand, Unit>
+    : IRequestHandler<CreateLeaveTypeCommand, int>
 {
-    public async Task<Unit> Handle(CreateLeaveTypeCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(CreateLeaveTypeCommand request, CancellationToken cancellationToken)
     {
         var validationResult = await new CreateLeaveTypeCommandValidator(leaveTypeRepository)
             .ValidateAsync(request, cancellationToken);
@@ -25,10 +25,10 @@ public class CreateLeaveTypeCommandHandler(
 
         var leaveType = mapper.Map<Domain.LeaveType>(request);
 
-        await leaveTypeRepository.CreateAsync(leaveType);
+        var leaveTypeId = await leaveTypeRepository.CreateAsync(leaveType);
 
         logger.LogInformation($"Leave type {leaveType.Name} created successfully");
 
-        return Unit.Value;
+        return leaveTypeId;
     }
 }
