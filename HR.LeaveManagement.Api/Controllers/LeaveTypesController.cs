@@ -1,3 +1,4 @@
+using HR.LeaveManagement.Api.Filters;
 using HR.LeaveManagement.Application.Features.LeaveType.Commands.CreateLeaveType;
 using HR.LeaveManagement.Application.Features.LeaveType.Commands.DeleteLeaveType;
 using HR.LeaveManagement.Application.Features.LeaveType.Commands.UpdateLeaveType;
@@ -13,6 +14,7 @@ namespace HR.LeaveManagement.Api.Controllers
     public class LeaveTypesController(IMediator mediator) : ControllerBase
     {
         [HttpGet]
+        [ServiceFilter(typeof(ResourceFilter))]
         public async Task<List<LeaveTypeDto>> Get()
         {
             var leaveTypes = await mediator.Send(new GetLeaveTypesQuery());
@@ -20,6 +22,7 @@ namespace HR.LeaveManagement.Api.Controllers
         }
 
         [HttpGet("{id}")]
+        [ServiceFilter(typeof(ResourceFilter))]
         public async Task<ActionResult<LeaveTypeDetailsDto>> Get(int id)
         {
             var leaveType = await mediator.Send(new GetLeaveTypeDetailsQuery(id));
@@ -29,6 +32,8 @@ namespace HR.LeaveManagement.Api.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ServiceFilter(typeof(AuthorizedUser))]
         public async Task<ActionResult> Post([FromBody] CreateLeaveTypeCommand createLeaveTypeCommand)
         {
             var response = await mediator.Send(createLeaveTypeCommand);
