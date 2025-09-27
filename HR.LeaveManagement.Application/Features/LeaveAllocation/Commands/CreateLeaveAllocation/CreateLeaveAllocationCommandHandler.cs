@@ -8,9 +8,9 @@ namespace HR.LeaveManagement.Application.Features.LeaveAllocation.Commands.Creat
 public class CreateLeaveAllocationCommandHandler(
     ILeaveAllocationRepository leaveAllocationRepository, 
     ILeaveTypeRepository leaveTypeRepository,
-    IMapper mapper) : IRequestHandler<CreateLeaveAllocationCommand, Unit>
+    IMapper mapper) : IRequestHandler<CreateLeaveAllocationCommand, int>
 {
-    public async Task<Unit> Handle(CreateLeaveAllocationCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(CreateLeaveAllocationCommand request, CancellationToken cancellationToken)
     {
         var validator = new CreateLeaveAllocationCommandValidator(leaveTypeRepository);
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
@@ -23,8 +23,8 @@ public class CreateLeaveAllocationCommandHandler(
         var leaveType = await leaveTypeRepository.GetByIdAsync(request.LeaveTypeId);
         
         var leaveAllocation = mapper.Map<Domain.LeaveAllocation>(request);
-        await leaveAllocationRepository.CreateAsync(leaveAllocation);
-        
-        return Unit.Value;
+        var id = await leaveAllocationRepository.CreateAsync(leaveAllocation);
+
+        return id;
     }
 }

@@ -1,6 +1,6 @@
 using HR.LeaveManagement.Application.Features.LeaveType.Queries.GetAllLeaveTypes;
 
-namespace HR.LeaveManagement.Application.Features.LeaveAllocation.Queries.GetLeaveAllocationDetails;
+namespace HR.LeaveManagement.Application.Features.LeaveAllocation.Queries.GetAllLeaveAllocations;
 
 public class LeaveAllocationDto
 {
